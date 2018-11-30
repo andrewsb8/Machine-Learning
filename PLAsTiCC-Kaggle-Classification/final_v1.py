@@ -8,6 +8,7 @@ import cesium.featurize as featurize
 from sklearn import linear_model as lm
 from scipy.stats import norm
 import scipy as sps
+from sklearn.linear_model import LogisticRegression
 
 
 #**************************************************************************************************************
@@ -126,7 +127,6 @@ plt.show()
 #Going to delete the dataframes with all of the data now that it is all organized in a dictionary
 del(train_data)
 del(train_meta_data)
-
 """
 #*******************************************************************************************************************
 #Now want to utilize some data visualization in order to get a feeling for what really separates these classes
@@ -196,11 +196,34 @@ for k in range(number_of_features_used): #loop through features
     plt.title("Probability Distribution")
     plt.show()
 
-#plot the data from the dummy arrays for the demo plot
+#make a logistic regression plot for demo plot
+xrange = np.arange(-15,22,.05)
+logreg = LogisticRegression()
+X = np.array(dummy_array_x + dummy_array_x_16)
+X = np.reshape(X,(-1,1))
+y = np.array(dummy_array_y + dummy_array_y_16)
+y = np.reshape(y,(-1,1))
+
+logreg.fit(X,y)
+
+def plotsigmoid(coeff,intercept,x):
+    z = (coeff*x) + intercept
+    value = []
+    for i in range(len(z)):
+        if z[i] < 0:
+            value.append(1 - 1/(1 + math.exp(z[i])))
+        if z[i] >= 0:
+            value.append(1/(1 + math.exp(-z[i])))
+    return value
+
+values = plotsigmoid(logreg.coef_[0],logreg.intercept_,xrange)
+
+#plot the data from the dummy arrays and the fitted sigmoid for the demo plot
 plt.figure(999)
 plt.title("Conversion of Data into a\n Binary Classification Problem")
 plt.plot(dummy_array_x_16,dummy_array_y_16,'o',color='red',label='Class 16')
 plt.plot(dummy_array_x,dummy_array_y,'o',color='blue',label='All Other Classes')
+plt.plot(xrange,values,'-',color='green')
 plt.legend()
 plt.show()
 
@@ -211,60 +234,3 @@ plt.show()
 #for the construction of a logistic regression model with l1 (LASSO) regularization
 #for each class as a binary multivariate classification problem. Here is the start
 #of the model construction.
-
-
-
-
-
-
-
-
-
-
-
-
-#***************************************************************************************************************************************
-#Ignore below for now 11/19/2018
-"""
-#the following does the same as above but breaks everything down into
-#passbands.  it seems that there are different fluxes and flux errors
-#for different passbands.  this may be worth exploring later if
-#necessary.
-
-passband = [0,1,2,3,4,5]
-#for i in range(len(train_meta_data)): #full loop
-for i in range(1): #start with a smaller number of objects
-    current_object_id = train_meta_data['object_id'][i]
-
-    for j in range(len(passband)):
-        t = []
-        m = []
-        e = []
-        for k in range(len(train_data)):
-            if (train_data['object_id'][k] == current_object_id and train_data['passband'][k] == j): #now collect data of a specific object_id and passband value
-                t.append(train_data['mjd'][k])
-                m.append(train_data['flux'][k])
-                e.append(train_data['flux'][k])
-
-        list_of_indices = np.arange(0,len(t)) #list of x values for plots
-
-        #plot each passband curve
-        plt.figure(1)
-        plt.plot(list_of_indices,t,'-',label="{},pb={}".format(current_object_id,passband[j]))
-        plt.legend()
-        plt.figure(2)
-        plt.plot(list_of_indices,m,'-',label="{},pb={}".format(current_object_id,passband[j]))
-        plt.legend()
-        plt.figure(3)
-        plt.plot(list_of_indices,e,'-',label="{},pb={}".format(current_object_id,passband[j]))
-        plt.legend()
-
-#plots
-plt.figure(1)
-plt.title("MJD")
-plt.figure(2)
-plt.title("Flux")
-plt.figure(3)
-plt.title("Flux Error")
-plt.show()
-"""
