@@ -42,11 +42,6 @@ train_data = pandas.read_csv("/media/sf_D_DRIVE/all/training_set.csv")
 #using the Dataframe.fillna method from pandas below.  The models will not train without this.
 train_meta_data.fillna(train_meta_data.mean(), inplace = True)
 
-#**************************************************************************************************************
-#Start main loop to split data up for each individual object_id.  Three arrays
-#are created (t,m,e) in order to extract features from the respective time series
-#data.  These features may include average values or other statistical values.
-
 #create a dictionary for the object IDs, target classes, and features of time series
 tsdict = {
     "object_ID":[], #object_id
@@ -75,14 +70,17 @@ feature_list = ["amplitude",
 
 tsdict['feature_titles'] = feature_list + list(train_meta_data.columns[1:11]) #combine time series feature and static feature titles
 
-#***************************************************************************************************************************************
+#**************************************************************************************************************
+#Start main loop to split data up for each individual object_id.  Three arrays
+#are created (t,m,e) in order to extract features from the respective time series
+#data.  These features may include average values or other statistical values.
 #Now want to featurize the time series data and organize all of the data into the dictionary above
 
 #calculate the number of objects now to avoid repeat calculations
 total_number_of_objects = len(train_meta_data)
 print(total_number_of_objects)
+
 #loop to featurize all of the data according to the feature list above
-#N = 100000 #set smaller number than above to do analysis first
 for i in range(total_number_of_objects): #start with a smaller number of objects
     current_object_id = train_meta_data['object_id'][i] #identify object_id of interest
     current_object_target = train_meta_data['target'][i] #identify object targe
