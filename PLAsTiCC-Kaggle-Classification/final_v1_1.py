@@ -10,6 +10,7 @@ Link to data: https://www.kaggle.com/c/PLAsTiCC-2018/data
 
 Author: Brian Andrews
 Date: 12/3/2018
+"""
 
 import sys
 import math
@@ -79,8 +80,8 @@ tsdict['feature_titles'] = feature_list + list(train_meta_data.columns[1:11]) #c
 #calculate the number of objects now to avoid repeat calculations
 total_number_of_objects = len(train_meta_data)
 print(total_number_of_objects)
-
 #loop to featurize all of the data according to the feature list above
+#N = 100000 #set smaller number than above to do analysis first
 for i in range(total_number_of_objects): #start with a smaller number of objects
     current_object_id = train_meta_data['object_id'][i] #identify object_id of interest
     current_object_target = train_meta_data['target'][i] #identify object targe
@@ -173,6 +174,8 @@ for i in range(len(tsdict['target_list'])): #loop to create a model for each cla
 
 tsdict['object_classification_percentages'] = [np.zeros(len(tsdict['model_probabilities'])) for i in range(len(tsdict['model_probabilities']))]
 
+#populate the above table by selecting the class for which the associated model provided the largest
+#probability of an objecct being in that class
 for g in range(len(y_test)):
     maximum = 0
     for f in range(len(tsdict['model_probabilities'])):
