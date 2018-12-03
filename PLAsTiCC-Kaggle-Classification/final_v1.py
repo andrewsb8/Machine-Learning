@@ -1,3 +1,14 @@
+"""
+This script takes data from a Kaggle competition (link below) which provides features and time series
+data with the goal of classification.  This script is the beginning of this process and shows mostly
+visualization of the data for presentation and exploratory data analysis.
+
+Link to data: https://www.kaggle.com/c/PLAsTiCC-2018/data
+
+Author: Brian Andrews
+Date: 12/3/2018
+"""
+
 import sys
 import math
 import numpy as np
@@ -9,6 +20,7 @@ from sklearn import linear_model as lm
 from scipy.stats import norm
 import scipy as sps
 from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 
 
 #**************************************************************************************************************
@@ -21,6 +33,10 @@ train_data = pandas.read_csv("D:\\all\\training_set.csv")
 #Linux data paths
 train_meta_data = pandas.read_csv("/media/sf_D_DRIVE/all/training_set_metadata.csv")
 train_data = pandas.read_csv("/media/sf_D_DRIVE/all/training_set.csv")
+
+#There are NaNs everywhere in the distmod column.  Going to replace them with the mean of the column
+#using the Dataframe.fillna method from pandas below.  The models will not train without this.
+train_meta_data.fillna(train_meta_data.mean(), inplace = True)
 
 #**************************************************************************************************************
 #Start main loop to split data up for each individual object_id.  Three arrays
@@ -36,7 +52,12 @@ tsdict = {
     "feature_titles": [], #all of the feature titles, features of time series and static variables
     "features":[], #nested lists of feature values, indexes of each list element are tied to feature_titles
     "y_values":[], #stores y values (0s or 1s) based on what target is being analyzed
-    "model_coefficients":[], #stores the coefficients of each model in an array or list
+    "model_coefficients":[] #stores the coefficients of each model in an array or list
+}
+
+tsdict_test = {
+    "object_ID":[], #object_id
+    "features_test":[],
     "test_result_percentages":[] #each array, corresponding to each object, expresses the percent chance that an object is of each class
 }
 
@@ -62,8 +83,8 @@ tsdict['feature_titles'] = feature_list + list(train_meta_data.columns[1:11]) #c
 total_number_of_objects = len(train_meta_data)
 
 #loop to featurize all of the data according to the feature list above
-#for i in range(total_number_of_objects): #full loop
-for i in range(500): #start with a smaller number of objects
+N = 50 #set smaller number than above to do analysis first
+for i in range(N): #start with a smaller number of objects
     current_object_id = train_meta_data['object_id'][i] #identify object_id of interest
     current_object_target = train_meta_data['target'][i] #identify object targe
     print(current_object_id,current_object_target)
@@ -89,17 +110,16 @@ for i in range(500): #start with a smaller number of objects
     tsdict['target'].append(current_object_target)
 
     #create time series object for the source in question and store for transformation of test data
-    tsdict['time_series_objects'].append(TimeSeries(t=t, m=m, e=e, label=current_object_target, name=current_object_id))
-
+    timeobj = TimeSeries(t=t, m=m, e=e, label=current_object_target, name=current_object_id)
 
     #featurize the time series object from above
-    features_of_time_series = featurize.featurize_single_ts(tsdict['time_series_objects'][i], features_to_use = feature_list,
+    features_of_time_series = featurize.featurize_single_ts(timeobj, features_to_use = feature_list,
         raise_exceptions=False)
+
 
     #print(features_of_time_series.values)
     tsdict['features'].append(list(features_of_time_series.values)) #add the list of time series features to the dictionary
     tsdict['features'][i] += list(train_meta_data.iloc[i,1:11]) #add the static data features
-
 
     """
     #plot figures of time series data for first three objects
@@ -127,6 +147,34 @@ plt.show()
 #Going to delete the dataframes with all of the data now that it is all organized in a dictionary
 del(train_data)
 del(train_meta_data)
+
+#Because of RAM limitations, I am going to repeat the process after deleting the training dataframes
+test_meta_data = pandas.read_csv("/media/sf_D_DRIVE/all/test_set_metadata.csv",nrows=1000)
+test_data = pandas.read_csv("/media/sf_D_DRIVE/all/test_set.csv",nrows=100000)
+test_meta_data.fillna(test_meta_data.mean(),inplace = True)
+
+print(test_meta_data)
+#starting the loop over again
+for j in range(N):
+    current_ob_id_test = test_meta_data['object_id'][j] #organize test data
+    print(current_ob_id_test)
+    indices_with_object_id_test = ((test_data['object_id'] == current_ob_id_test)) #same with test data
+    t_test = list(test_data['mjd'][indices_with_object_id_test])
+    m_test = list(test_data['flux'][indices_with_object_id_test])
+    e_test = list(test_data['flux_err'][indices_with_object_id_test])
+    tsdict_test['object_ID'].append(current_ob_id_test) #same for test minus target data because that is not available
+    timeobj_test = TimeSeries(t=t_test,m=m_test,e=e_test,label=current_ob_id_test,name=current_ob_id_test)
+    features_of_time_series_test = featurize.featurize_single_ts(timeobj_test,features_to_use = feature_list,
+        raise_exceptions=False)
+    tsdict_test['features_test'].append(list(features_of_time_series_test.values))
+    tsdict_test['features_test'][j] += list(test_meta_data.iloc[j,1:11])
+
+#delete large dataframes again
+del(test_data)
+del(test_meta_data)
+
+print(tsdict)
+print(tsdict_test)
 """
 #*******************************************************************************************************************
 #Now want to utilize some data visualization in order to get a feeling for what really separates these classes
@@ -229,8 +277,20 @@ plt.show()
 
 """
 
-#*******************************************************************************************************************
-#Now the data is organized in the tsdict dictionary object and will be used
-#for the construction of a logistic regression model with l1 (LASSO) regularization
-#for each class as a binary multivariate classification problem. Here is the start
-#of the model construction.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#ignore this comment
