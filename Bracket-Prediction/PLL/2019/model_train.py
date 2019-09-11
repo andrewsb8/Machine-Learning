@@ -7,6 +7,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
 """
+Data is taken from PLL_Data.xlsx sheet Weekly Aggregates. Each game is taken and the stats
+lines are subtracted. A decision tree model is then trained based on the differences between
+the two teams aggregated stats leading into the week in question. Win or lose will be defined
+for the team with the lowest index in the current_game dataframe. Win = 1, Lose = -1.
 
 Author: Brian Andrews
 Last Date Modified: 9/9/2019

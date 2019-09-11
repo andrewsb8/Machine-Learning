@@ -7,6 +7,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
 """
+This script takes game data from Round X Games in PLL_Data.xlsx. It transforms the data the
+same way as in model_train.py. Then the model trained in model_train.py is loaded and used
+to predict the outcome of each game in the input data sheet.
 
 Author: Brian Andrews
 Last Date Modified: 9/9/2019

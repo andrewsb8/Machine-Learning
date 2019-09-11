@@ -8,6 +8,11 @@ pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 10000)
 
 """
+This script produces a data set for weekly averages, aggregates, and percentages for specific
+stats which can be found in the definitions of the dataframes below. A set of data for each team
+is printed to an excel sheet for each week. Those stats are each teams leading into the week labeled.
+The model(s?) will be trained with these weekly aggregated stats. These sheets are manually placed
+into the Weekly Aggregates sheet of PLL_Data.xlsx from test.xlsx.
 
 Author: Brian Andrews
 Last Date Modified: 9/9/2019
