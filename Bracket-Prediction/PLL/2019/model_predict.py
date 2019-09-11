@@ -11,13 +11,13 @@ This script takes game data from Round X Games in PLL_Data.xlsx. It transforms t
 same way as in model_train.py. Then the model trained in model_train.py is loaded and used
 to predict the outcome of each game in the input data sheet.
 
-Author: Brian Andrews
+Author: andrewsb8
 Last Date Modified: 9/9/2019
 """
 
 #import the data to train the model
 sheet_with_data = 'Round 3 Games'
-raw_dat = pd.read_excel("C:\\Users\\BrianAndrews\\OneDrive\\Bracket_Prediction\\PLL\\PLL_Data.xlsx", sheet_name=sheet_with_data)
+raw_dat = pd.read_excel("C:\\Users\\*****\\OneDrive\\Bracket_Prediction\\PLL\\PLL_Data.xlsx", sheet_name=sheet_with_data)
 
 #create new dataframe with same columns as raw_dat
 test_dat = pd.DataFrame(columns=raw_dat.columns)
