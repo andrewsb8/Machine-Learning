@@ -12,12 +12,12 @@ lines are subtracted. A decision tree model is then trained based on the differe
 the two teams aggregated stats leading into the week in question. Win or lose will be defined
 for the team with the lowest index in the current_game dataframe. Win = 1, Lose = -1.
 
-Author: Brian Andrews
+Author: andrewsb8
 Last Date Modified: 9/9/2019
 """
 
 #import the data to train the model
-raw_dat = pd.read_excel("C:\\Users\\BrianAndrews\\OneDrive\\Bracket_Prediction\\PLL\\PLL_Data.xlsx", sheet_name='Weekly Aggregates')
+raw_dat = pd.read_excel("C:\\Users\\*****\\OneDrive\\Bracket_Prediction\\PLL\\PLL_Data.xlsx", sheet_name='Weekly Aggregates')
 
 #create new dataframe with same columns as raw_dat
 train_dat = pd.DataFrame(columns=raw_dat.columns)
