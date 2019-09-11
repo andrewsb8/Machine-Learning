@@ -14,7 +14,7 @@ is printed to an excel sheet for each week. Those stats are each teams leading i
 The model(s?) will be trained with these weekly aggregated stats. These sheets are manually placed
 into the Weekly Aggregates sheet of PLL_Data.xlsx from test.xlsx.
 
-Author: Brian Andrews
+Author: andrewsb8
 Last Date Modified: 9/9/2019
 """
 
@@ -44,7 +44,7 @@ nested2 = [[0 for i in range(15)] for i in range(number_of_teams)]
 side_datfram = pd.DataFrame(nested2, index = [1,2,3,4,5,6], #index = ['Whipsnakes','Chaos','Redwoods','Archers','Atlas','Chrome'],
                             columns = ['total goals', 'total 2 pt shot', 'total 2 pt goals', 'total shots', 'total goals (no 2 pt)', 'total gb', 'total TO', 'total CT', 'total FO','total FO won', 'total PP','total attempted PP', 'total Saves', 'total shots on goal', 'total GA'])
 
-weekly_data = pd.read_excel("C:\\Users\\BrianAndrews\\OneDrive\\Bracket_Prediction\\PLL\\PLL_Data.xlsx", sheet_name='Weekly Results')
+weekly_data = pd.read_excel("C:\\Users\\*****\\OneDrive\\Bracket_Prediction\\PLL\\PLL_Data.xlsx", sheet_name='Weekly Results')
 
 #delete the lists because they are no longer needed
 del(nested,nested2)
