@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd
+cd ~/prediction_app/
+python3 temp_info_update.py

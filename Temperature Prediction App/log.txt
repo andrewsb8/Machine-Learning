@@ -1,0 +1,2 @@
+{'yesterday_high': 64.82, 'yesterday_low': 44.74, 'yesterday_predict_high': 66.7927927927928, 'yesterday_predict_low': 48.29943502824859, 'today_high': 63.79, 'today_low': 47.69, 'predict_high': 62.277955271565496, 'predict_low': 44.55, 'now': 'Thu Jul  4 05:00:01 2019'}
+{'yesterday_high': 63.79, 'yesterday_low': 47.69, 'yesterday_predict_high': 62.277955271565496, 'yesterday_predict_low': 44.55, 'today_high': 60.07, 'today_low': 47.99, 'predict_high': 62.277955271565496, 'predict_low': 48.29943502824859, 'now': 'Fri Jul  5 05:00:01 2019'}
