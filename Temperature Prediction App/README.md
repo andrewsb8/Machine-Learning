@@ -1,4 +1,4 @@
-These are the files used for a very basic gunicorn/nginx webapp that predicts the high/low daily temperature using the previous day's
+These are the files used for a very basic gunicorn/nginx web app that predicts the high/low daily temperature using the previous day's
 high/low temperatures and a decision tree model. These files were placed on a remote Ubuntu server and in a virtual environment.
 
 The files do the following:
