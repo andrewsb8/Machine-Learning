@@ -43,8 +43,8 @@ connection = pyodbc.connect(
     r'DRIVER={SQL Server};'
     r'SERVER='
     r'DATABASE=testCostAnalysis;'
-    r'UID=medasync;'
-    r'PWD=M3dasync1;'
+    r'UID=;'
+    r'PWD=;'
     )
 
 #command used to store queries.  Can't have two connections open at once...
