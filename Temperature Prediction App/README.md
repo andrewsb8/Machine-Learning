@@ -1,3 +1,7 @@
+This project remains incomplete but I wanted it documented and the idea available
+as a demonstration of my development and the conscious effort to make ideas implementable
+in distributed environments.
+
 These are the files used for a very basic gunicorn/nginx web app that predicts the high/low daily temperature using the previous day's
 high/low temperatures and a decision tree model. These files were placed on a remote Ubuntu server and in a virtual environment.
 

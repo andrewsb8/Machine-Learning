@@ -1,3 +1,15 @@
+/*
+    This is C# code for the RANSAC linear regression method. This method is
+    implemented to prevent the influence of extreme outliers on the results
+    of a linear regression method.
+
+    This code was written to be integrated in a product for OptoQuest as a
+    part of the Cleveland Clinic.
+
+    Author: Brian Andrews
+    Date: 2018
+*/
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +45,7 @@ namespace ransac
 
             param[0] = (1 / ((len * x2sum) - (xsum * xsum))) * ((len * xysum) - (xsum * ysum));
             param[1] = (1 / ((len * x2sum) - (xsum * xsum))) * ((x2sum * ysum) - (xsum * xysum));
-            
+
             return param;
         }
 
@@ -144,7 +156,7 @@ namespace ransac
             }
 
             /*
-             * Start RANSAC method 
+             * Start RANSAC method
              * Will be fitting a linear model
              * The following values are the parameters that govern the algorithm:
              * n - Establish a minimum number of data points to take from data set to create fit
@@ -169,7 +181,7 @@ namespace ransac
                 /*
                  * Fit sample of data with Linear Least Squares Method
                 */
-                
+
                 double[] parameters = new double[2]; //array for slope and intercept
                 parameters = calcParams(n, sample.xn, sample.yn); //calculate those parameters
                 //Console.WriteLine(parameters[0] + " " + parameters[1]);
@@ -183,7 +195,7 @@ namespace ransac
                 }
 
                 l++;
-            }            
+            }
 
             Console.WriteLine("\n Press c or anything really");
             System.Console.ReadKey();

@@ -1,8 +1,12 @@
 """
+This script was an attempt to extend the decision tree python script and implement
+a random forest model using the same temperature data. It remains unfinished.
+
 This script will take data from a csv file regarding temperature and will train a random forest regression model to predict future
 temperatures (highs and lows) based on previous day's temperatures as well as monthly averages.
 
 Author: Brian Andrews
+Date: 2018
 """
 
 import sys
@@ -80,7 +84,7 @@ with open('Weather_Data.csv','r') as csvfile:
                 avg_high_low.append(r[1])
                 avg_high_low.append(r[2])
         prev_line = r[0]
-"""    
+"""
 #print(year_month, date, maxi)
 #print(avg_year_month,avg_high_low)
 
@@ -112,7 +116,7 @@ class Node:
         print(self.data, self.level)
         if self.right != None:
             self.right.printtree()
-            
+
 """ testing out the nodes and tree functionality
 root = Node([1,2,3], 0)
 #print(root.data, root.level)
@@ -138,32 +142,3 @@ def std(av,array): #compute standard deviation of a list of values
         total += (array[i]-av)*(array[i]-av)
     var = total/len(array)
     return math.sqrt(var)
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

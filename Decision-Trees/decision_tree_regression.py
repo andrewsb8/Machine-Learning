@@ -1,9 +1,13 @@
 """
+This script generates a decision tree from scratch. Temperature prediction was the
+basic task used to validate and test the model.
+
 This script will take data from a csv file regarding temperature and will train a decision tree
 regression model to predict future temperatures (highs and lows) based on the respective high or low
 temperature of the day before.
 
 Author: Brian Andrews
+Date: 2018
 """
 
 import sys
@@ -82,7 +86,7 @@ with open('Weather_Data.csv','r') as csvfile:
                 avg_high_low.append(r[1])
                 avg_high_low.append(r[2])
         prev_line = r[0]
-   
+
 #print(year_month, date, maxi)
 #print(avg_year_month,avg_high_low)
 
@@ -228,7 +232,7 @@ class Node:
             self.right.split(depth,root)
         if self.level == depth-1:
             self.insert_Leaf(average(self.data[2]))
-    
+
 
     def printtree(self):   #prints tree starting from left most child node
         if self.left != None:   #goes left child, parent, right child
@@ -267,36 +271,4 @@ for i in range(len(root_high_temp.data[2])):
         countl += 1
 
 print(math.sqrt(sum1)/counth, math.sqrt(sum2)/countl)
-print(math.sqrt(sum1/counth), math.sqrt(sum2/countl))   
-
-   
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print(math.sqrt(sum1/counth), math.sqrt(sum2/countl))

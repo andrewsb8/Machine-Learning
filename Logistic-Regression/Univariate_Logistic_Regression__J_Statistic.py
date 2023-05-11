@@ -1,4 +1,7 @@
 """
+This script was used in a project while working for OptoQuest in the Cleveland
+Clinic to research postoperative risk of ectasia forming in LASIK patients.
+
 Objective: Establish a threshold value for each variable according to Youden's
 Index (J statistic) and choose the variable and the cutoff of the optimal
 predictor which is quantified by max(J).
@@ -6,6 +9,7 @@ predictor which is quantified by max(J).
 Variables considered will be quantized according to a k binning process.
 
 Author: Brian Andrews
+Date: 2018
 """
 
 import sys
@@ -29,13 +33,13 @@ def store(colnum, rownum, case, data, table = [[]]):
                 date = datetime(*xlrd.xldate_as_tuple(mainSheet.cell_value(rownum+i, colnum+j), 0))
                 dateStr = str(date) #change the date to a string
                 table[i,j] = 2017 - strToFloat(dateStr)
-            else:    
+            else:
                 #check if there are strings
                 check = isinstance(mainSheet.cell_value(rownum+i,colnum+j), str)
                 if check == False: #if entry is not a string (therefore, an int), add to table
                     table[i,j] = mainSheet.cell_value(rownum+i, colnum+j)
                 if check == True: #if entry is a string
-                    numFromString = strToFloat(mainSheet.cell_value(rownum+i, colnum+j)) #strip it and take first number 
+                    numFromString = strToFloat(mainSheet.cell_value(rownum+i, colnum+j)) #strip it and take first number
                     table[i,j] = numFromString #add new float to table
                     check = False #make check False again so the loop works
     return table
@@ -91,7 +95,7 @@ def makebins(numbins, ect = [], cont = []):
     for i in range(numbins):
         loc += binsize
         array.append(loc)
-        
+
     return array, binsize
 
 """
@@ -110,7 +114,7 @@ def calc_hypothesis(theta, x):
       z += x[i]*theta[i]
    return logistic_func(z)
 
-#error or cost function 
+#error or cost function
 def Cost_Function(X,Y,theta,m):
    sumOfErrors = 0
    for i in range(m):
@@ -273,7 +277,7 @@ for y in range(TotalnumberOfDataPoints):
                     countE += 1
                 if ectasia[u,y] < hs[i]:
                     countE += 1
-            for v in range(numControl):                
+            for v in range(numControl):
                 if control[v,y] >= hs[i]:
                     hscountC += 1
                     countC += 1
@@ -286,7 +290,7 @@ for y in range(TotalnumberOfDataPoints):
                     countE += 1
                 if ectasia[u,y] > hs[i]:
                     countE += 1
-            for v in range(numControl):                
+            for v in range(numControl):
                 if control[v,y] <= hs[i]:
                     hscountC += 1
                     countC += 1
@@ -323,7 +327,7 @@ to be concise and easier to look back on.
 """
 #data structures for model creation and plot creation
 x = [[] for i in range(numControl + numberOfCases)]
-xplot = [] 
+xplot = []
 y = []
 
 #******************************************************************************
@@ -395,38 +399,3 @@ plt.title("Logistic Regression Model: Max Strain Pretreatment Predicting Ectasia
 plt.plot(xplot, y, 'bo')
 plt.plot(xplot, z, 'r^')
 plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,15 +1,14 @@
-"""
-This script was used in a project while working for OptoQuest in the Cleveland
-Clinic to research postoperative risk of ectasia forming in LASIK patients.
+#*******************************************************************************************************************************************************************
+#This script was used in a project while working for OptoQuest in the Cleveland
+#Clinic to research postoperative risk of ectasia forming in LASIK patients.
 
-Another version of the general logistic regression algorithm using gradient
-descent for parameter convergence.  This script utilizes stratified cross
-validation in place of splitting the data set in question into a training
-and testing set.
+#This script takes a combination of data points (defined explicitly by the user), trains a multivariate logistic regression model for the
+#chosen data points, and uses k-fold cross-validation to determine the efficacy of the model.
 
-Author: Brian Andrews
-Date: 2018
-"""
+#Author: Brian Andrews
+#Last Date Modified: 8/2/2018
+#********************************************************************************************************************************************************************
+
 
 import sys
 import math

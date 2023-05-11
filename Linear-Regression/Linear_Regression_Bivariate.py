@@ -1,4 +1,6 @@
 """
+Medasync Cost Prediction Algorithm v2 Production Version:
+
 This script creates multivariate linear regression models for a list of
 Diagnosis Codes.  The model calculates parameters used in a linear model to
 predicts cost per day based on retrospective data of similar patients
@@ -6,6 +8,7 @@ predicts cost per day based on retrospective data of similar patients
 comorbidities.
 
 Author: Brian Andrews
+Date: 2018
 """
 
 import sys
@@ -37,7 +40,7 @@ def average(x = []):
         sumx += x[i]
 
     return sumx/len(x)
-    
+
 
 #function to calculate coeff of determination (R^2)
 def rsq(avy, param = [], x0 = [], x1 = [], y = []):
@@ -69,7 +72,7 @@ def inverse(mat = [[]]):
     minor = np.zeros((len(mat)-1,len(mat)-1),float)
     newmat = np.zeros((len(mat),len(mat)), float)
 
-    
+
     for i in range(len(mat)):
         for j in range(len(mat)):
             m = 0
@@ -91,8 +94,8 @@ def inverse(mat = [[]]):
                 newmat[j,i] = -np.linalg.det(minor)/d
 
     return newmat
-             
-    
+
+
 
 #calculate regression parameters
 def regress(x0 = [], x1 = [], y = []): #x is # of comorbidities and y is cost per day
@@ -128,12 +131,12 @@ def regress(x0 = [], x1 = [], y = []): #x is # of comorbidities and y is cost pe
             yx0 += y[u]*x0[u]
             yx1 += y[u]*x1[u]
             yx0x1 += y[u]*x0[u]*x1[u]
-            ysum += y[u] 
+            ysum += y[u]
             count += 1
 
     #introduce matrix and vector containing necessary sums (see book for derivation)
     matrix = np.array([[x02sum, x0x1,x0sum], [x0x1,x12sum,x1sum],[x0sum,x1sum,count]])
-    
+
     vector.append(yx0)
     vector.append(yx1)
     vector.append(ysum)
@@ -237,7 +240,7 @@ for a in range(len(pdiagcodes)):
     if ((len(x2) <= 1 or len(y2) <= 1) or (len(x2) > 1 and len(y2) > 1 and len(xfound) <= 1)): #need more than one data point to do regression analysis
         result = [0,0,0]
         rsquared = 0
-    
+
     for q in range(len(categoryid)):
         #make arrays of nonzero cost per day for plotting purposes
         x2 = []
@@ -260,7 +263,7 @@ for a in range(len(pdiagcodes)):
             if xbool == 1:
                 xbool = 0
 
-        
+
         #calculate the parameters
         if (len(x2) > 1 and len(y2) > 1 and len(xfound) > 1):
             result = regress(x2,x21,y2)
@@ -269,11 +272,11 @@ for a in range(len(pdiagcodes)):
         if ((len(x2) <= 1 or len(y2) <= 1) or (len(x2) > 1 and len(y2) > 1 and len(xfound) <= 1)): #need more than two data points to do this regression analysis
             result = [0,0,0]
             se = 0
-        
+
         print(pdiagcodes[a],categoryid[q],subcategoryid[q], result, rsquared, numpatients, se)
         cursor.execute("insert into model_parameters values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}', '{8}')".format(pdiagcodes[a],categoryid[q],subcategoryid[q],result[0],result[1],result[2],rsquared,numpatients,se))
         connection.commit()
-        
+
     del bigtable
 
 now = datetime.datetime.now()
@@ -284,7 +287,7 @@ readlines = []
 for line in lines:
     readlines.append(line.strip('\n'))
 output.close()
-    
+
 writestuff = open("model_update_log.txt", 'w+')
 writestuff.write("*****************************************************************\n")
 writestuff.write("Date and Time: %s\n" % (now))
@@ -296,16 +299,3 @@ for n in range(len(readlines)):
     writestuff.write("\n")
 
 writestuff.close()
-
-
-
-
-
-
-
-
-
-
-
-        
-        

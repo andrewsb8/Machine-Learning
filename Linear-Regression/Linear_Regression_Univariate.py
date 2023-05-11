@@ -26,6 +26,7 @@ THE PROD DB.  COMMITTING THIS CODE WILL CHANGE THE TABLE IN THE PROD DB.
 ********************************************************************************
 
 Author: Brian Andrews
+Date: 2018
 """
 
 import sys
@@ -62,7 +63,7 @@ def average(x = []):
         sumx += x[i]
 
     return sumx/len(x)
-    
+
 
 #function to calculate coeff of determination (R^2)
 def rsq(avy, param = [], x = [], y = []):
@@ -210,7 +211,7 @@ for a in range(len(pdiagcodes)):
             if gotem == 1:
                 gotem = 0
 
-    #enter the third rows      
+    #enter the third rows
     for k in range(len(stays[0])):
         for u in range(len(bigtable[0])):
             if (bigtable[0][u] == stays[0][k] and bigtable[1][u] == stays[1][k]):
@@ -233,7 +234,7 @@ for a in range(len(pdiagcodes)):
                                 if bigtable[2][b] != 0:
                                     bigtable[h+4][b] += trans[4][d]/bigtable[2][b]
 
-    
+
     for q in range(len(chargecategories)):
         numpatients = 0
         #make arrays of nonzero cost per day for plotting purposes
@@ -263,31 +264,7 @@ for a in range(len(pdiagcodes)):
         if ((len(x2) <= 1 or len(y2) <= 1) or (len(x2) > 1 and len(y2) > 1 and len(xfound) <= 1)): #need more than one data point to do regression analysis
             result = [0,0]
             rsquared = 0
-        
+
         print(pdiagcodes[a], chargecategories[q], result, rsquared)
         cursor.execute("insert into DiagnosisCostRegressionEquations values (?, ?,?,?,?,?,?)",pdiagcodes[a],categoryid[q],subcategoryid[q],result[0],result[1],rsquared,numpatients)
         cursor.commit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

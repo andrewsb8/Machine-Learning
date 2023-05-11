@@ -1,15 +1,15 @@
-"""
-This script was used in a project while working for OptoQuest in the Cleveland
-Clinic to research postoperative risk of ectasia forming in LASIK patients.
+#*******************************************************************************************************************************************************************
+#This script was used in a project while working for OptoQuest in the Cleveland
+#Clinic to research postoperative risk of ectasia forming in LASIK patients.
 
-Another version of the general logistic regression algorithm using gradient
-descent for parameter convergence.  Assuming cross validation has been performed
-(using the cross validation script in this repository and there isn't enough
-data to justify splitting to a training and testing set, this script also
-provides ROC curves and Decision Curves to show model performance.
+#This script takes multiple combinations of data points (defined explicitly by the user), trains multivariate logistic regression models for those
+# combinations of data points, and compares the models by various metrics. These metrics are the area under the receiving operating characteristic
+#curve, the J statistic (provides the best cutoff for sigmoid output to decide between positives and negatives to maximize sensitivity and specificity),
+#and Decision curves which shows what conditions are better for which models.
 
-Author: Brian Andrews
-"""
+#Author: Brian Andrews
+#Last Date Modified: 8/2/2018
+#********************************************************************************************************************************************************************
 
 import sys
 import math
@@ -287,14 +287,12 @@ No Strain Pretreatment: Above but leave out calculated strain
 
 The idea is to loop through all of these models and effectively compare them to also judge quality.
 """
-"""
+
 indices = [[0,1,3,4,6,7,8,10,12,13,14,15,16,17,18,20], #full model
            [0,7,8,10,11,12,15,17,18,20], #pretreatment
            [0,7,8,10,11,12,15,17,18,20], #no strain pretreatment
            [0,10,11,12,15,17,18,20], #no mrx with strain
            [0,10,11,12,15,17,18,20]] #no mrx without strain
-"""
-indices = [[0,10,11,12,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,48]]
 
 
 #arrays to store values necessary for later
