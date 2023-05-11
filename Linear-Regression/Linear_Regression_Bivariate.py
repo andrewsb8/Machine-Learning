@@ -16,9 +16,9 @@ import datetime
 
 #database information is redacted to protect previous client's information
 connection = pymysql.connect(host = '',
-                             user = 'root',
-                             password = 'PinnacleCases8*!',
-                             db = 'Cost-Info')
+                             user = '',
+                             password = '',
+                             db = '')
 
 cursor = connection.cursor()
 
